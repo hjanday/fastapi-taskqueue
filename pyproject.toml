@@ -18,6 +18,7 @@ dev = [
     "pytest>=7.4.4",
     "pytest-cov>=4.1.0",
     "httpx>=0.26.0",  # For testing FastAPI
+    "types-pyyaml>=6.0.0",  # Type stubs for YAML
 ]
 
 [build-system]
@@ -66,10 +67,6 @@ warn_unused_ignores = true
 warn_no_return = true
 follow_imports = "normal"
 ignore_missing_imports = false
-
-[[tool.mypy.overrides]]
-module = "uvicorn.*"
-ignore_missing_imports = true
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
