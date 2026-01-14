@@ -23,6 +23,9 @@ class Settings(BaseSettings):
     app_version: str = "0.1.0"
     environment: str = "development"
     debug: bool = True
+    
+    # Database
+    database_url: str = "postgresql+asyncpg://user:password@localhost:5432/taskqueue"
 
     # Logging
     log_level: str = "INFO"
