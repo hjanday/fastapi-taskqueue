@@ -10,7 +10,21 @@ from sqlalchemy.sql import func
 
 from .database import Base
 
-
+# Job/Task Model
+"""
+Need: 
+- Job ID
+- Job Name
+- Job Description
+- Job Status
+- Job Created At
+- Job Updated At
+- Job URL (S3)
+- Job Retry Count
+- Job Retry Delay
+- Job Retry Limit
+- Idempotency Key (this is to ensure no duplicate transactions get handled or two events get processed)
+"""
 class Job(Base):
     __tablename__ = "jobs"
 
@@ -33,3 +47,7 @@ class Job(Base):
         onupdate=func.now()
     )
     url: Mapped[Optional[str]] = mapped_column(String(2048), nullable=True)
+    retry_count: Mapped[int] = mapped_column(Integer, default=0)
+    retry_delay: Mapped[int] = mapped_column(Integer, default=0)
+    retry_limit: Mapped[int] = mapped_column(Integer, default=0)
+    idempotency_key: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
