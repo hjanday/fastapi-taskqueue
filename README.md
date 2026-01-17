@@ -1,13 +1,13 @@
 # fastapi-taskqueue
 
-A scalable task queue system built with FastAPI, AWS services, and Kubernetes.
+A toy project designed to learn FastAPI, task queue basics, Docker, and Kubernetes.
 
 ## Overview
 
-This project provides a distributed task queue system with:
-- **FastAPI Control Plane** - REST API for task management
-- **Worker System** - Distributed task processing (coming soon)
-- **Kubernetes Deployment** - Cloud-native infrastructure (coming soon)
+This project is to learn exploring distributed system concepts and cloud-native architecture. I build a task queue system to demonstrate:
+- **FastAPI** - Building robust REST APIs
+- **Task Queues** - Understanding asynchronous background processing
+- **Docker & Kubernetes** - Containerization and orchestration mechanics
 
 ## Quick Start
 

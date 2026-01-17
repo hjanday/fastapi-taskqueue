@@ -9,6 +9,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy.sql import func
 
 from .database import Base
+from sqlalchemy import Integer
 
 # Job/Task Model
 """
