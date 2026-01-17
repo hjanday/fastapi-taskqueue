@@ -17,7 +17,13 @@ class JobBase(BaseModel):
 
 class JobCreate(JobBase):
     """Properties to receive on item creation."""
-    pass
+    name: str
+    description: Optional[str] = None
+    url: Optional[str] = None
+    retry_count: Optional[int] = None
+    retry_delay: Optional[int] = None
+    retry_limit: Optional[int] = None
+    idempotency_key: Optional[str] = None
 
 
 class Job(JobBase):
@@ -26,5 +32,8 @@ class Job(JobBase):
     status: Literal["pending", "in_progress", "completed", "failed"]
     created_at: datetime
     updated_at: datetime
-
+    retry_count: Optional[int] = None
+    retry_delay: Optional[int] = None
+    retry_limit: Optional[int] = None
+    idempotency_key: Optional[str] = None
     model_config = ConfigDict(from_attributes=True)
