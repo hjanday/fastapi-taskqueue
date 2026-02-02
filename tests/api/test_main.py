@@ -19,3 +19,13 @@ def test_health_endpoint(client: TestClient) -> None:
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "healthy"
+
+
+def test_metrics_endpoint(client: TestClient) -> None:
+    """Test the metrics endpoint returns scaffolded payload."""
+    response = client.get("/metrics")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "ok"
+    assert data["metrics"] == {}
+
