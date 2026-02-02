@@ -50,6 +50,148 @@ Returns basic information about the API.
 
 ---
 
+### Metrics
+
+#### `GET /metrics`
+
+Returns a placeholder metrics payload.
+
+**Response:**
+```json
+{
+  "status": "ok",
+  "metrics": {}
+}
+```
+
+**Status Codes:**
+- `200 OK` - Success
+
+---
+
+### Jobs
+
+#### `POST /jobs`
+
+Create a job with optional idempotency handling.
+
+**Request Body:**
+```json
+{
+  "name": "example",
+  "description": "optional",
+  "url": "https://example.com",
+  "retry_count": 0,
+  "retry_delay": 0,
+  "retry_limit": 3,
+  "idempotency_key": "optional-key"
+}
+```
+
+**Response:**
+```json
+{
+  "id": "uuid",
+  "name": "example",
+  "description": "optional",
+  "url": "https://example.com",
+  "status": "pending",
+  "created_at": "2024-01-01T00:00:00Z",
+  "updated_at": "2024-01-01T00:00:00Z",
+  "retry_count": 0,
+  "retry_delay": 0,
+  "retry_limit": 3,
+  "idempotency_key": "optional-key"
+}
+```
+
+**Status Codes:**
+- `201 Created` - Job created
+- `200 OK` - Existing job returned via idempotency key
+
+---
+
+#### `GET /jobs`
+
+List jobs with pagination.
+
+**Query Params:**
+- `limit` (default 50)
+- `offset` (default 0)
+
+**Response:**
+```json
+[
+  {
+    "id": "uuid",
+    "name": "example",
+    "description": "optional",
+    "url": "https://example.com",
+    "status": "pending",
+    "created_at": "2024-01-01T00:00:00Z",
+    "updated_at": "2024-01-01T00:00:00Z",
+    "retry_count": 0,
+    "retry_delay": 0,
+    "retry_limit": 3,
+    "idempotency_key": "optional-key"
+  }
+]
+```
+
+**Status Codes:**
+- `200 OK` - Success
+
+---
+
+#### `GET /jobs/{job_id}`
+
+Retrieve a single job by ID.
+
+**Response:** Same as `POST /jobs` response.
+
+**Status Codes:**
+- `200 OK` - Success
+- `404 Not Found` - Job does not exist
+
+---
+
+#### `GET /jobs/{job_id}/status`
+
+Retrieve job status by ID.
+
+**Response:**
+```json
+{
+  "id": "uuid",
+  "status": "pending"
+}
+```
+
+**Status Codes:**
+- `200 OK` - Success
+- `404 Not Found` - Job does not exist
+
+---
+
+#### `DELETE /jobs/{job_id}`
+
+Cancel a job (status update scaffold).
+
+**Response:**
+```json
+{
+  "id": "uuid",
+  "status": "failed",
+  "message": "Job cancelled"
+}
+```
+
+**Status Codes:**
+- `202 Accepted` - Cancellation recorded
+- `404 Not Found` - Job does not exist
+
+---
+
 ## Authentication
 
 Authentication is not yet implemented. This section will be updated as authentication mechanisms are added.
@@ -91,17 +233,23 @@ curl -X GET http://localhost:8000/health
 curl -X GET http://localhost:8000/
 ```
 
+### Create a Job
+
+```bash
+curl -X POST http://localhost:8000/jobs \
+  -H "Content-Type: application/json" \
+  -d '{"name": "example"}'
+```
+
+### List Jobs
+
+```bash
+curl -X GET "http://localhost:8000/jobs?limit=10&offset=0"
+```
+
 ## Future Endpoints
 
 The following endpoints are planned for future releases:
-
-### Tasks
-
-- `POST /tasks` - Create a new task
-- `GET /tasks` - List all tasks
-- `GET /tasks/{task_id}` - Get task details
-- `DELETE /tasks/{task_id}` - Cancel a task
-- `GET /tasks/{task_id}/status` - Get task status
 
 ### Queue Management
 
@@ -110,7 +258,7 @@ The following endpoints are planned for future releases:
 
 ## Versioning
 
-The API version is included in the application metadata. Future versions may introduce versioned endpoints (e.g., `/v1/tasks`).
+The API version is included in the application metadata. Future versions may introduce versioned endpoints (e.g., `/v1/jobs`).
 
 ## Rate Limiting
 

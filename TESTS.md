@@ -15,6 +15,7 @@ This document defines the testing strategy for the FastAPI task queue MVP.
 - **Utility behavior**
   - Retry calculation logic (if introduced).
   - Idempotency key conflict handling (if implemented in API layer).
+  - ORM helper mappings for API payloads.
 
 ### 2) Integration tests
 **Goal:** Validate API + DB behavior using a real or containerized database.
